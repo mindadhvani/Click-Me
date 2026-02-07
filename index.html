@@ -1,260 +1,140 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>Valentine 💖</title>
 
-
 <style>
-
-  body {
-
-    margin: 0;
-
-    height: 100vh;
-
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-
-    font-family: 'Arial', sans-serif;
-
-    text-align: center;
-
-    color: white;
-
-    overflow: hidden;
-
-  }
-
-
-  h1 {
-
-    margin-top: 120px;
-
-    font-size: 2.6rem;
-
-  }
-
-
-  button {
-
-    padding: 14px 35px;
-
-    font-size: 1.2rem;
-
-    border: none;
-
-    border-radius: 30px;
-
-    cursor: pointer;
-
-    margin: 20px;
-
-  }
-
-
-  #yes {
-
-    background: white;
-
-    color: #ff4b6e;
-
-  }
-
-
-  #no {
-
-    background: #ff4b6e;
-
-    color: white;
-
-    position: absolute;
-
-  }
-
-
-  .hidden {
-
-    display: none;
-
-  }
-
-
-  /* Hearts */
-
-  .heart {
-
-    position: absolute;
-
-    color: pink;
-
-    font-size: 20px;
-
-    animation: float 6s linear infinite;
-
-  }
-
-
-  @keyframes float {
-
-    0% { transform: translateY(100vh); opacity: 1; }
-
-    100% { transform: translateY(-10vh); opacity: 0; }
-
-  }
-
-
-  /* Fireworks */
-
-  .firework {
-
-    position: absolute;
-
-    width: 8px;
-
-    height: 8px;
-
-    border-radius: 50%;
-
-    animation: explode 1.2s infinite;
-
-  }
-
-
-  @keyframes explode {
-
-    0% { transform: scale(0); opacity: 1; }
-
-    100% { transform: scale(3); opacity: 0; }
-
-  }
-
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+  }
+
+  h1 {
+    margin-top: 120px;
+    font-size: 2.6rem;
+  }
+
+  button {
+    padding: 14px 35px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 20px;
+  }
+
+  #yes {
+    background: white;
+    color: #ff4b6e;
+  }
+
+  #no {
+    background: #ff4b6e;
+    color: white;
+    position: absolute;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  /* Hearts */
+  .heart {
+    position: absolute;
+    color: pink;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  /* Fireworks */
+  .firework {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: explode 1.2s infinite;
+  }
+
+  @keyframes explode {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
+  }
 </style>
-
 </head>
-
 
 <body>
 
-
 <audio autoplay loop>
-
-  <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_0b3f6b7f89.mp3" type="audio/mpeg">
-
+  <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_0b3f6b7f89.mp3" type="audio/mpeg">
 </audio>
 
-
 <div id="question">
-
-  <h1>Will you be my Valentine, Rishabh? 💖</h1>
-
-  <button id="yes" onclick="yesClick()">Yes 💘</button>
-
-  <button id="no" onmouseover="moveNo()">No 🙃</button>
-
+  <h1>Will you be my Valentine, Rishabh? 💖</h1>
+  <button id="yes" onclick="yesClick()">Yes 💘</button>
+  <button id="no" onmouseover="moveNo()">No 🙃</button>
 </div>
-
 
 <div id="yesMessage" class="hidden">
-
-  <h1>🎉 Congratulations! 🎉</h1>
-
-  <h2>You are gifted all upcoming Valentines with Dhvani 💕</h2>
-
+  <h1>🎉 Congratulations! 🎉</h1>
+  <h2>You are gifted all upcoming Valentines with Dhvani 💕</h2>
 </div>
 
-
 <script>
+  // Move NO button
+  function moveNo() {
+    const noBtn = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
 
-  // Move NO button
+  // YES click
+  function yesClick() {
+    document.getElementById("question").classList.add("hidden");
+    document.getElementById("yesMessage").classList.remove("hidden");
+    fireworks();
+  }
 
-  function moveNo() {
+  // Fireworks
+  function fireworks() {
+    for (let i = 0; i < 35; i++) {
+      const fw = document.createElement("div");
+      fw.className = "firework";
+      fw.style.top = Math.random() * window.innerHeight + "px";
+      fw.style.left = Math.random() * window.innerWidth + "px";
+      fw.style.background = `hsl(${Math.random()*360},100%,50%)`;
+      document.body.appendChild(fw);
+      setTimeout(() => fw.remove(), 1200);
+    }
+  }
 
-    const noBtn = document.getElementById("no");
+  // Hearts on load
+  function hearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 300);
+  }
 
-    const x = Math.random() * (window.innerWidth - 100);
-
-    const y = Math.random() * (window.innerHeight - 50);
-
-    noBtn.style.left = x + "px";
-
-    noBtn.style.top = y + "px";
-
-  }
-
-
-  // YES click
-
-  function yesClick() {
-
-    document.getElementById("question").classList.add("hidden");
-
-    document.getElementById("yesMessage").classList.remove("hidden");
-
-    fireworks();
-
-  }
-
-
-  // Fireworks
-
-  function fireworks() {
-
-    for (let i = 0; i < 35; i++) {
-
-      const fw = document.createElement("div");
-
-      fw.className = "firework";
-
-      fw.style.top = Math.random() * window.innerHeight + "px";
-
-      fw.style.left = Math.random() * window.innerWidth + "px";
-
-      fw.style.background = `hsl(${Math.random()*360},100%,50%)`;
-
-      document.body.appendChild(fw);
-
-      setTimeout(() => fw.remove(), 1200);
-
-    }
-
-  }
-
-
-  // Hearts on load
-
-  function hearts() {
-
-    setInterval(() => {
-
-      const heart = document.createElement("div");
-
-      heart.className = "heart";
-
-      heart.innerHTML = "💖";
-
-      heart.style.left = Math.random() * window.innerWidth + "px";
-
-      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-
-      document.body.appendChild(heart);
-
-      setTimeout(() => heart.remove(), 6000);
-
-    }, 300);
-
-  }
-
-
-  hearts();
-
+  hearts();
 </script>
 
-
 </body>
-
 </html>
-
